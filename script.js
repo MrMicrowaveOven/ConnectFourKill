@@ -13,7 +13,54 @@ document.whoseTurn = 0;
 function makeMove(column) {
   addDisc(column);
   removeImpossibleMoves(column);
+  checkForVictory(column);
   switchTurn();
+}
+
+function checkForVictory(column) {
+  var row = document.columns[column].length - 1;
+
+  // Vertical Wins
+  checkForVerticalVictory(row, column);
+
+  // for (var i = 0; i < 4; i++) {
+  //   possibleHorWins.push([row, column + i])
+  // }
+  //
+  // for (var i = 0; i < 4; i++) {
+  //   possibleDiagWins.push([row, column])
+  // }
+  // for (var i = 0; i < 4; i++) {
+  //   possibleDiagWins.push([row, column])
+  // }
+}
+
+function checkForVerticalVictory(row, column) {
+  console.log("Row: " + row + ", Column: " + column + ".");
+  if (row < 3) {
+    return false;
+  }
+  var possibleVertWins = [];
+  for (var i = 0; i < 4; i++) {
+    possibleVertWins.push([row - i, column])
+  }
+
+  console.log("Checking: " + possibleVertWins);
+
+  var isVictory = true
+
+  possibleVertWins.forEach(function(el) {
+    console.log("It is " + document.whoseTurn + "'s turn!");
+    console.log(document.columns[el[1]][el[0]]);
+    if (document.columns[el[1]][el[0]] != document.whoseTurn) {
+      console.log("Not a victory");
+      isVictory = false;
+    }
+  })
+  if (isVictory) {
+    console.log("Victory!");
+    return true;
+  }
 }
 
 function removeImpossibleMoves(column) {
