@@ -18,8 +18,40 @@ function makeMove(column) {
 function addDisc(column) {
   var color = document.whoseTurn;
   var row = document.columns[column].length;
-  document.columns[column].push(color)
-  document.getElementById("r"  + row + "column" + column).innerHTML = color;
+
+  if (document.whoseTurn == 0) {
+    var discImage = "http://www.clipartkid.com/images/131/images-for-blue-circles-free-cliparts-that-you-can-download-to-you-4gYfis-clipart.png";
+  } else {
+    var discImage = "https://www.cogenhr.com/development/wp-content/uploads/2015/03/Red-circle-transparent-1024x1006.png";
+  }
+
+  // Set global
+  document.columns[column].push(color);
+
+  var disc = document.createElement('img');
+  disc.setAttribute("src", discImage)
+  disc.setAttribute("width", "50px")
+  disc.setAttribute("height", "50px")
+  disc.setAttribute("class", "disc")
+
+  // // Make svg to hold disc image
+  // var disc = document.createElement('svg');
+  // disc.setAttribute("width", "100")
+  // disc.setAttribute("height", "100")
+  // // Make circle in svg
+  // var circle = document.createElement('circle');
+  // circle.setAttribute("cx", "50")
+  // circle.setAttribute("cy", "50")
+  // circle.setAttribute("r", "50")
+  // circle.setAttribute("stroke", "black")
+  // circle.setAttribute("stroke-width", "3")
+  // circle.setAttribute("fill", "red")
+
+  // Add disc, which contains svg and circle, to appropriate tile
+  console.log(disc);
+  document.getElementById("r"  + row + "column" + column).innerHTML = "";
+  document.getElementById("r"  + row + "column" + column).appendChild(disc);
+  // disc.appendChild(circle);
 }
 
 function switchTurn() {

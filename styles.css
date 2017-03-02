@@ -4,11 +4,15 @@ table, td {
 }
 
 td {
-  width: 200px;
+  width: 100px;
+}
+
+.disc {
+  vertical-align: middle;
 }
 
 table {
-  width: 100%;
+  /*width: 100%;*/
   margin-top: 10px;
 }
 .row {
