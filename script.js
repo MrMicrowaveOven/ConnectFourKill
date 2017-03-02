@@ -12,7 +12,15 @@ document.whoseTurn = 0;
 
 function makeMove(column) {
   addDisc(column);
+  removeImpossibleMoves(column);
   switchTurn();
+}
+
+function removeImpossibleMoves(column) {
+  var numDiscs = document.columns[column].length;
+  if (numDiscs == 6) {
+    document.getElementById("addDisc" + column).setAttribute("hidden", true)
+  }
 }
 
 function addDisc(column) {
