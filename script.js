@@ -22,6 +22,7 @@ function checkForVictory(column) {
 
   // Vertical Wins
   checkForVerticalVictory(row, column);
+  checkForHorizontalVictory(row, column);
 
   // for (var i = 0; i < 4; i++) {
   //   possibleHorWins.push([row, column + i])
@@ -34,9 +35,32 @@ function checkForVictory(column) {
   //   possibleDiagWins.push([row, column])
   // }
 }
+function checkForHorizontalVictory(row, column) {
+  var left = column - 3;
+  var right = column + 3;
+  if (left < 0) {
+    left = 0
+  }
+  if (right > 6) {
+    right = 6
+  }
+  var inARow = 0;
+  for (var i = left; i <= right; i++) {
+    console.log("Checking " + i + ", " + row + ".");
+    if (document.columns[i][row] === document.whoseTurn) {
+      inARow++;
+    } else {
+      inARow = 0;
+    }
+    if (inARow == 4) {
+      console.log("Victory!");
+      return true;
+    }
+  }
+
+}
 
 function checkForVerticalVictory(row, column) {
-  console.log("Row: " + row + ", Column: " + column + ".");
   if (row < 3) {
     return false;
   }
@@ -45,13 +69,9 @@ function checkForVerticalVictory(row, column) {
     possibleVertWins.push([row - i, column])
   }
 
-  console.log("Checking: " + possibleVertWins);
-
   var isVictory = true
 
   possibleVertWins.forEach(function(el) {
-    console.log("It is " + document.whoseTurn + "'s turn!");
-    console.log(document.columns[el[1]][el[0]]);
     if (document.columns[el[1]][el[0]] != document.whoseTurn) {
       console.log("Not a victory");
       isVictory = false;
