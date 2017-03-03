@@ -52,13 +52,13 @@ function checkForVictory(column) {
         } else {
           inARow++;
         }
+        if (inARow == 4) {
+          winningSquares = potentialVictory;
+          victory = true;
+          console.log("winningSquares: ");
+          console.info(winningSquares);
+        }
       })
-      if (inARow == 4) {
-        winningSquares = potentialVictory;
-        victory = true;
-        console.log("winningSquares: ");
-        console.info(winningSquares);
-      }
       inARow = 0;
   })
 
