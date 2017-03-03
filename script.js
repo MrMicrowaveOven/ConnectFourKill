@@ -42,6 +42,7 @@ function checkForVictory(column) {
   var inARow = 0;
   var victory = false;
   var winningSquares;
+  var winner;
 
   potentialVictories.forEach(function(potentialVictory) {
       potentialVictory.forEach(function(square) {
@@ -55,6 +56,7 @@ function checkForVictory(column) {
         if (inARow == 4) {
           winningSquares = potentialVictory;
           victory = true;
+          winner = document.whoseTurn;
           console.log("winningSquares: ");
           console.info(winningSquares);
         }
@@ -63,6 +65,12 @@ function checkForVictory(column) {
   })
 
   if (victory){
+    if (winner == 0) {
+      winner = "red"
+    } else {
+      winner = "blue"
+    }
+    document.getElementById("caption").innerHTML = "Victory to " + winner + "!!!!!";
     console.log("Victory!");
   }
 }
