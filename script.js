@@ -17,71 +17,82 @@ function makeMove(column) {
   switchTurn();
 }
 
+function horVicTest() {
+  makeMove(1);
+  makeMove(1);
+  makeMove(2);
+  makeMove(2);
+  makeMove(3);
+  makeMove(3);
+  makeMove(4);
+}
+
+
 function checkForVictory(column) {
   var row = document.columns[column].length - 1;
 
-  // Vertical Wins
-  checkForVerticalVictory(row, column);
-  checkForHorizontalVictory(row, column);
+  var potentialVictories = [];
+  var potentialVictories = potentialVictories.concat(getPotentialVerticalVictories(column, row))
+  var potentialVictories = potentialVictories.concat(getPotentialHorizontalVictories(column, row))
+  console.log("potentialVictories: ");
+  console.info(potentialVictories);
+  console.log("Global columns: ");
+  console.info(document.columns);
 
-  // for (var i = 0; i < 4; i++) {
-  //   possibleHorWins.push([row, column + i])
-  // }
-  //
-  // for (var i = 0; i < 4; i++) {
-  //   possibleDiagWins.push([row, column])
-  // }
-  // for (var i = 0; i < 4; i++) {
-  //   possibleDiagWins.push([row, column])
-  // }
-}
-function checkForHorizontalVictory(row, column) {
-  var left = column - 3;
-  var right = column + 3;
-  if (left < 0) {
-    left = 0
-  }
-  if (right > 6) {
-    right = 6
-  }
   var inARow = 0;
-  for (var i = left; i <= right; i++) {
-    console.log("Checking " + i + ", " + row + ".");
-    if (document.columns[i][row] === document.whoseTurn) {
-      inARow++;
-    } else {
+  var victory = false;
+  var winningSquares;
+
+  potentialVictories.forEach(function(potentialVictory) {
+      potentialVictory.forEach(function(square) {
+        console.log("document.columns[" + square[0] + "][" + square[1] + "] = " + document.columns[square[0]][square[1]]);
+        console.log("document.whoseTurn: " + document.whoseTurn);
+        if (document.columns[square[0]][square[1]] !== document.whoseTurn) {
+          inARow = 0;
+        } else {
+          inARow++;
+        }
+      })
+      if (inARow == 4) {
+        winningSquares = potentialVictory;
+        victory = true;
+        console.log("winningSquares: ");
+        console.info(winningSquares);
+      }
       inARow = 0;
-    }
-    if (inARow == 4) {
-      console.log("Victory!");
-      return true;
-    }
-  }
-
-}
-
-function checkForVerticalVictory(row, column) {
-  if (row < 3) {
-    return false;
-  }
-  var possibleVertWins = [];
-  for (var i = 0; i < 4; i++) {
-    possibleVertWins.push([row - i, column])
-  }
-
-  var isVictory = true
-
-  possibleVertWins.forEach(function(el) {
-    if (document.columns[el[1]][el[0]] != document.whoseTurn) {
-      console.log("Not a victory");
-      isVictory = false;
-    }
   })
-  if (isVictory) {
+
+  if (victory){
     console.log("Victory!");
-    return true;
   }
 }
+
+function getPotentialHorizontalVictories(column, row) {
+
+  var inARow = 0;
+  var possibleHorWins = [];
+  for (var i = 0; i <= 6; i++) {
+    possibleHorWins.push([i, row])
+  }
+  return [possibleHorWins]
+}
+
+function getPotentialVerticalVictories(column, row) {
+  if (row < 3) {
+    console.log("No potential Vertical Victories");
+    return [];
+  }
+  var possibleVertWin = [];
+  for (var i = 0; i < 4; i++) {
+    possibleVertWin.push([column, row - i])
+  }
+  console.log("Potential Vert wins:" + possibleVertWin);
+  return [possibleVertWin];
+}
+
+
+
+
 
 function removeImpossibleMoves(column) {
   var numDiscs = document.columns[column].length;
@@ -130,6 +141,7 @@ function addDisc(column) {
 }
 
 function switchTurn() {
+  console.log("SwitchingTurns");
   if (document.whoseTurn === 0) {
     document.whoseTurn = 1;
   } else if (document.whoseTurn === 1) {
