@@ -49,7 +49,7 @@ function victory(winningSquares) {
   console.log(winningSquares);
   winningSquares.forEach(function (coords) {
     document.getElementById("r"  + coords[1] + "column" + coords[0] + "Disk").setAttribute("border", "10px solid black")
-    document.getElementById("r"  + coords[1] + "column" + coords[0] + "Disk").setAttribute("border-radius", "100px")
+    document.getElementById("r"  + coords[1] + "column" + coords[0] + "Disk").setAttribute("style", "border-radius: 100px")
   })
   removeAllMoves();
 }
