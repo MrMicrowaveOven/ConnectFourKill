@@ -9,6 +9,28 @@ document.columns = [
 ]
 
 document.whoseTurn = 0;
+document.totalNumDiscs = 0;
+
+function makeRandomMove() {
+  var possibleMoves = getPossibleMoves();
+  // console.log("Possible Moves: " + possibleMoves);
+  var randomNumber = Math.floor(Math.random() * possibleMoves.length);
+  var randomMove = possibleMoves[randomNumber];
+  addDisc(randomMove);
+  removeImpossibleMoves(randomMove);
+  checkForVictory(randomMove);
+  switchTurn();
+}
+
+function getPossibleMoves() {
+  var possibleMoves = [];
+  document.columns.forEach(function(column, columnIndex) {
+    if (column.length != 6) {
+      possibleMoves.push(columnIndex)
+    }
+  })
+  return possibleMoves;
+}
 
 function makeMove(column) {
   addDisc(column);
@@ -81,8 +103,7 @@ function getPotentialDiagVictories(column, row) {
     fall[0] += 1
     fall[1] -= 1
   }
-  console.log("coordsDown");
-  console.log(coordsDown);
+
   if (coordsDown.length >= 4) {
     possibleDiagWins.push(coordsDown)
   }
@@ -108,20 +129,21 @@ function getPotentialVerticalVictories(column, row) {
   return [possibleVertWin];
 }
 
-
-
-
-
 function removeImpossibleMoves(column) {
   var numDiscs = document.columns[column].length;
   if (numDiscs == 6) {
-    document.getElementById("addDisc" + column).setAttribute("hidden", true)
+    document.getElementById("addDisc" + column).setAttribute("hidden", true);
+  }
+  if (document.totalNumDiscs == 42) {
+    document.getElementById("makeRandomMove").setAttribute("hidden", true);
   }
 }
 
 function addDisc(column) {
+  document.totalNumDiscs++;
   var color = document.whoseTurn;
   var row = document.columns[column].length;
+  console.log("Adding a disc to column " + column + " row " + row + ".");
 
   if (document.whoseTurn == 0) {
     var discImage = "http://www.clipartkid.com/images/131/images-for-blue-circles-free-cliparts-that-you-can-download-to-you-4gYfis-clipart.png";
