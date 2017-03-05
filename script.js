@@ -39,6 +39,17 @@ function makeMove(column) {
   switchTurn();
 }
 
+function victory() {
+  var winner = document.whoseTurn;
+  if (winner == 0) {
+    winner = "blue"
+  } else {
+    winner = "red"
+  }
+  document.getElementById("caption").innerHTML = "Victory to " + winner + "!!!!!";
+  removeAllMoves();
+}
+
 function checkForVictory(column) {
   var row = document.columns[column].length - 1;
 
@@ -48,9 +59,8 @@ function checkForVictory(column) {
   var potentialVictories = potentialVictories.concat(getPotentialDiagVictories(column, row))
 
   var inARow = 0;
-  var victory = false;
+  var isVictory = false;
   var winningSquares;
-  var winner;
 
   potentialVictories.forEach(function(potentialVictory) {
       potentialVictory.forEach(function(square) {
@@ -61,22 +71,18 @@ function checkForVictory(column) {
         }
         if (inARow == 4) {
           winningSquares = potentialVictory;
-          victory = true;
-          winner = document.whoseTurn;
+          isVictory = true;
         }
       })
       inARow = 0;
   })
 
-  if (victory){
-    if (winner == 0) {
-      winner = "blue"
-    } else {
-      winner = "red"
-    }
-    document.getElementById("caption").innerHTML = "Victory to " + winner + "!!!!!";
+  if (isVictory){
+    victory();
   }
 }
+
+
 function getPotentialDiagVictories(column, row) {
   var i = 0;
   var possibleDiagWins = [];
@@ -110,6 +116,8 @@ function getPotentialDiagVictories(column, row) {
   return possibleDiagWins;
 }
 
+
+
 function getPotentialHorizontalVictories(column, row) {
   var possibleHorWins = [];
   for (var i = 0; i <= 6; i++) {
@@ -139,11 +147,18 @@ function removeImpossibleMoves(column) {
   }
 }
 
+function removeAllMoves() {
+  var possibleMoves = getPossibleMoves();
+  possibleMoves.forEach(function(columnIndex) {
+    document.getElementById("addDisc" + columnIndex).setAttribute("hidden", true);
+  })
+}
+
 function addDisc(column) {
   document.totalNumDiscs++;
   var color = document.whoseTurn;
   var row = document.columns[column].length;
-  console.log("Adding a disc to column " + column + " row " + row + ".");
+  // console.log("Adding a disc to column " + column + " row " + row + ".");
 
   if (document.whoseTurn == 0) {
     var discImage = "http://www.clipartkid.com/images/131/images-for-blue-circles-free-cliparts-that-you-can-download-to-you-4gYfis-clipart.png";
@@ -167,7 +182,6 @@ function addDisc(column) {
 }
 
 function switchTurn() {
-  console.log("SwitchingTurns");
   if (document.whoseTurn === 0) {
     document.whoseTurn = 1;
   } else if (document.whoseTurn === 1) {
