@@ -42,10 +42,15 @@ function makeMove(column) {
   switchTurn();
 }
 
-function victory() {
+function victory(winningSquares) {
   var winner = document.whoseTurn;
   var winnerColor = playerColor(winner);
   document.getElementById("caption").innerHTML = "Victory to " + winnerColor + "!!!!!";
+  console.log(winningSquares);
+  winningSquares.forEach(function (coords) {
+    document.getElementById("r"  + coords[1] + "column" + coords[0] + "Disk").setAttribute("border", "10px solid black")
+    document.getElementById("r"  + coords[1] + "column" + coords[0] + "Disk").setAttribute("border-radius", "100px")
+  })
   removeAllMoves();
 }
 
@@ -59,7 +64,7 @@ function checkForVictory(column) {
 
   var inARow = 0;
   var isVictory = false;
-  var winningSquares;
+  var winningSquares = [];
 
   potentialVictories.forEach(function(potentialVictory) {
       potentialVictory.forEach(function(square) {
@@ -67,17 +72,20 @@ function checkForVictory(column) {
           inARow = 0;
         } else {
           inARow++;
+          winningSquares.push([square[0], square[1]])
         }
         if (inARow == 4) {
-          winningSquares = potentialVictory;
+
+          winningSquares = winningSquares.slice(winningSquares.length - 4)
           isVictory = true;
+
         }
       })
       inARow = 0;
   })
 
   if (isVictory){
-    victory();
+    victory(winningSquares);
   }
 }
 
@@ -182,6 +190,10 @@ function otherPlayer(player) {
   }
 }
 
+function winningMoves(player) {
+
+}
+
 function addDiscImage(column, row, color) {
   if (document.whoseTurn == 0) {
     var discImage = "http://www.clipartkid.com/images/131/images-for-blue-circles-free-cliparts-that-you-can-download-to-you-4gYfis-clipart.png";
@@ -194,6 +206,7 @@ function addDiscImage(column, row, color) {
   disc.setAttribute("width", "50px")
   disc.setAttribute("height", "50px")
   disc.setAttribute("class", "disc")
+  disc.setAttribute("id", "r" + row + "column" + column + "Disk");
 
   // Add disc, which contains svg and circle, to appropriate tile
   document.getElementById("r"  + row + "column" + column).innerHTML = "";
