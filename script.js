@@ -140,18 +140,19 @@ function getPotentialVerticalVictories(column, row) {
 function removeImpossibleMoves(column) {
   var numDiscs = document.columns[column].length;
   if (numDiscs == 6) {
-    document.getElementById("addDisc" + column).setAttribute("hidden", true);
+    document.getElementById("addDisc" + column).disabled = "false";
   }
   if (document.totalNumDiscs == 42) {
-    document.getElementById("makeRandomMove").setAttribute("hidden", true);
+    document.getElementById("makeRandomMove").disabled = "false";
   }
 }
 
 function removeAllMoves() {
   var possibleMoves = getPossibleMoves();
   possibleMoves.forEach(function(columnIndex) {
-    document.getElementById("addDisc" + columnIndex).setAttribute("hidden", true);
+    document.getElementById("addDisc" + columnIndex).disabled = "false";
   })
+  document.getElementById("makeRandomMove").disabled = "false";
 }
 
 function addDisc(column) {
