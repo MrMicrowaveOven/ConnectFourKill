@@ -17,7 +17,6 @@ function playAgain() {
 
 function makeRandomMove() {
   var possibleMoves = getPossibleMoves();
-  // console.log("Possible Moves: " + possibleMoves);
   var randomNumber = Math.floor(Math.random() * possibleMoves.length);
   var randomMove = possibleMoves[randomNumber];
   addDisc(randomMove);
@@ -163,16 +162,21 @@ function addDisc(column) {
   document.totalNumDiscs++;
   var color = document.whoseTurn;
   var row = document.columns[column].length;
-  // console.log("Adding a disc to column " + column + " row " + row + ".");
 
+
+  // Set global
+  document.columns[column].push(color);
+
+  addDiscImage(column, row, color);
+
+}
+
+function addDiscImage(column, row, color) {
   if (document.whoseTurn == 0) {
     var discImage = "http://www.clipartkid.com/images/131/images-for-blue-circles-free-cliparts-that-you-can-download-to-you-4gYfis-clipart.png";
   } else {
     var discImage = "https://www.cogenhr.com/development/wp-content/uploads/2015/03/Red-circle-transparent-1024x1006.png";
   }
-
-  // Set global
-  document.columns[column].push(color);
 
   var disc = document.createElement('img');
   disc.setAttribute("src", discImage)
@@ -183,8 +187,9 @@ function addDisc(column) {
   // Add disc, which contains svg and circle, to appropriate tile
   document.getElementById("r"  + row + "column" + column).innerHTML = "";
   document.getElementById("r"  + row + "column" + column).appendChild(disc);
-  // disc.appendChild(circle);
 }
+
+
 
 function switchTurn() {
   if (document.whoseTurn === 0) {

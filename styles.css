@@ -22,3 +22,7 @@ table {
 .controlRow {
   height: 30px;
 }
+
+#gameTable {
+  margin-top: 50px;
+}
