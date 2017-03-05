@@ -11,6 +11,10 @@ document.columns = [
 document.whoseTurn = 0;
 document.totalNumDiscs = 0;
 
+function playAgain() {
+  location.reload();
+}
+
 function makeRandomMove() {
   var possibleMoves = getPossibleMoves();
   // console.log("Possible Moves: " + possibleMoves);
