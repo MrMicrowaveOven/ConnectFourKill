@@ -44,12 +44,8 @@ function makeMove(column) {
 
 function victory() {
   var winner = document.whoseTurn;
-  if (winner == 0) {
-    winner = "blue"
-  } else {
-    winner = "red"
-  }
-  document.getElementById("caption").innerHTML = "Victory to " + winner + "!!!!!";
+  var winnerColor = playerColor(winner);
+  document.getElementById("caption").innerHTML = "Victory to " + winnerColor + "!!!!!";
   removeAllMoves();
 }
 
@@ -168,7 +164,22 @@ function addDisc(column) {
   document.columns[column].push(color);
 
   addDiscImage(column, row, color);
+}
 
+function playerColor(player) {
+  if (player == 0) {
+    return "blue";
+  } else {
+    return "red";
+  }
+}
+
+function otherPlayer(player) {
+  if (player == 0) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
 function addDiscImage(column, row, color) {
