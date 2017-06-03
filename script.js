@@ -6,11 +6,12 @@ document.columns = [
   [], //4
   [], //5
   []  //6
-]
+];
 
 document.whoseTurn = 0;
 
 function makeMove(column) {
+  console.log("Making my move as player " + document.whoseTurn);
   addDisc(column);
   removeImpossibleMoves(column);
   checkForVictory(column);
@@ -52,7 +53,7 @@ function checkForVictory(column) {
         } else {
           inARow++;
         }
-      })
+      });
       if (inARow == 4) {
         winningSquares = potentialVictory;
         victory = true;
@@ -60,7 +61,7 @@ function checkForVictory(column) {
         console.info(winningSquares);
       }
       inARow = 0;
-  })
+  });
 
   if (victory){
     console.log("Victory!");
@@ -72,21 +73,21 @@ function getPotentialHorizontalVictories(column, row) {
   var inARow = 0;
   var possibleHorWins = [];
   for (var i = 0; i <= 6; i++) {
-    possibleHorWins.push([i, row])
+    possibleHorWins.push([i, row]);
   }
-  return [possibleHorWins]
+  return [possibleHorWins];
 }
 
 function getPotentialVerticalVictories(column, row) {
   if (row < 3) {
-    console.log("No potential Vertical Victories");
+    // console.log("No potential Vertical Victories");
     return [];
   }
   var possibleVertWin = [];
   for (var i = 0; i < 4; i++) {
     possibleVertWin.push([column, row - i])
   }
-  console.log("Potential Vert wins:" + possibleVertWin);
+  // console.log("Potential Vert wins:" + possibleVertWin);
   return [possibleVertWin];
 }
 
@@ -134,7 +135,7 @@ function addDisc(column) {
   // circle.setAttribute("fill", "red")
 
   // Add disc, which contains svg and circle, to appropriate tile
-  console.log(disc);
+  // console.log(disc);
   document.getElementById("r"  + row + "column" + column).innerHTML = "";
   document.getElementById("r"  + row + "column" + column).appendChild(disc);
   // disc.appendChild(circle);
