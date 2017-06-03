@@ -2,6 +2,10 @@ table, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
+.disc {
+  display: block;
+  margin: auto;
+}
 
 td {
   width: 100px;
@@ -19,6 +23,18 @@ table {
   height: 100px;
 }
 
-.controlRow {
+.addDisc {
+  margin: auto;
+  width: 70px;
+  display: block;
+}
+
+#controlTable {
   height: 30px;
+  width: 720px;
+}
+
+#gameTable {
+  width: 720px;
+  margin-top: 50px;
 }
